@@ -11,6 +11,7 @@ class AuthForm extends Component {
       firstName: "",
       lastName: ""
     };
+    this.lastLocation = "";
   }
 
   handleSubmit = e => {
@@ -41,8 +42,11 @@ class AuthForm extends Component {
       history,
       removeError
     } = this.props;
-    history.listen(() => {
-      removeError();
+    history.listen(event => {
+      if (this.lastLocation !== window.location.pathname) {
+        this.lastLocation = window.location.pathname;
+        removeError();
+      }
     });
     return (
       <div>
